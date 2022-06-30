@@ -4,7 +4,7 @@ apiVersion: apps/v1
 metadata:
   name: csi-rbdplugin
   # replace with non-default namespace name
-  namespace: default
+  namespace: ceph
 spec:
   selector:
     matchLabels:
@@ -208,7 +208,7 @@ kind: Service
 metadata:
   name: csi-metrics-rbdplugin
   # replace with non-default namespace name
-  namespace: default
+  namespace: ceph
   labels:
     app: csi-metrics
 spec:
