@@ -4,7 +4,7 @@ metadata:
   labels:
     app: tentacle-plc1-front
   name: tentacle-plc1-front
-  namespace: jar-edge-playground
+  namespace: edge-playground
 spec:
   selector:
     matchLabels:

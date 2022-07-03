@@ -1,14 +1,15 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   labels:
     app: tentacle-plc1-codeserver
   name: tentacle-plc1-codeserver
-  namespace: jar-edge-playground
+  namespace: edge-playground
 spec:
   selector:
     matchLabels:
       app: tentacle-plc1-codeserver
+  serviceName: tentacle-plc1-codeserver
   replicas: 1
   template:
     metadata:
@@ -23,9 +24,22 @@ spec:
         volumeMounts:
           - mountPath: /home/coder/project
             name: tentacle-plc1-pv
+        volumeMounts:
+          - mountPath: /home/coder/.config
+            name: tentacle-plc1-codeserver
       volumes:
       - name: tentacle-plc1-pv
         persistentVolumeClaim:
           claimName: tentacle-plc1-pvc-tentacle-plc1-0
+  volumeClaimTemplates:
+  - metadata:
+      name: ignition-plc1-codeserver
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 2Gi
+      storageClassName: csi-rbd-sc
      
 
