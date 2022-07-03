@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: tentacle-plc1
+  name: tentacle-plc1
+  namespace: jar-edge-playground
+spec:
+  selector:
+    matchLabels:
+      app: tentacle-plc1
+  serviceName: tentacle-plc1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tentacle-plc1
+    spec:
+      containers:
+      - name: tentacle-plc1
+        image: docker.io/joyja/tentacle-plc:0.0.10
+        volumeMounts:
+        - name: tentacle-plc1-pvc
+          mountPath: /tentacle/runtime
+      initContainers:
+      - name: tentacle-plc1-volume-permission-fix
+        image: busybox
+        command: ["/bin/chmod","-R","777", "/tentacle/runtime"]
+        volumeMounts:
+        - mountPath: /tentacle/runtime
+          name: tentacle-plc1-pvc
+  volumeClaimTemplates:
+  - metadata:
+      name: tentacle-plc1-pvc
+    spec:
+      accessModes:
+      - ReadWriteMany
+      resources:
+        requests:
+          storage: 2Gi
+      storageClassName: csi-cephfs-sc

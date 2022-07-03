@@ -18,7 +18,10 @@ spec:
     spec:
       containers:
       - name: ignition-makers1
-        image: docker.io/kcollins/ignition:8.1.17
+        envFrom:
+        - secretRef:
+            name: ignition-makers1-creds
+        image: docker.io/kcollins/ignition:8.1.18
         volumeMounts:
         - name: ignition-makers1-pvc
           mountPath: /data
@@ -35,7 +38,6 @@ spec:
     spec:
       accessModes:
       - ReadWriteOnce
-      volumeMode: Filesystem
       resources:
         requests:
           storage: 2Gi

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: tentacle-plc1-codeserver
+  name: tentacle-plc1-codeserver
+  namespace: jar-edge-playground
+spec:
+  ports:
+  - port: 8080
+    name: http
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: tentacle-plc1-codeserver
+  sessionAffinity: None
+  type: NodePort
+
