@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: tentacle-plc1
-        image: docker.io/joyja/tentacle-plc:v0.0.11-dev
+        image: docker.io/joyja/tentacle-plc:v0.0.12
         env: 
         # necessary because we are using cephfs (network file sharing) to
         # share files between code-server and tentacle-plc.

@@ -16,15 +16,19 @@ spec:
         app: tentacle-plc1-front
     spec:
       containers:
-      - image: joyja/tentacle-plc-front:v0.0.11-dev
+      - image: joyja/tentacle-plc-front:v0.0.12
         name: tentacle-plc1-front
         imagePullPolicy: Always
         env:
           - name: TENTACLE_SERVER_HOST
             value: tentacle-plc1
           - name: TENTACLE_CLIENT_PORT
-            value: '30590'
+            value: '80'
+          - name: TENTACLE_CLIENT_URL
+            value: '/api/'
           - name: TENTACLE_CODESERVER_PORT
-            value: '30462'
+            value: '80'
+          - name: TENTACLE_CODESERVER_URL
+            value: '/codeserver/'
      
 
