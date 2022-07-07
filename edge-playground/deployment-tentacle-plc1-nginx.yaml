@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tentacle-plc1-nginx
+  namespace: edge-playground
+spec:
+  selector:
+      matchLabels:
+        app: tentacle-plc1-nginx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: tentacle-plc1-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d # mount default.conf to /etc/nginx/conf.d
+          readOnly: true
+          name: nginx-conf
+      volumes:
+      - name: nginx-conf
+        configMap:
+          name: tentacle-plc1-nginx-conf # place ConfigMap `nginx-conf` on /etc/nginx
+          items:
+            - key: nginx.conf
+              path: default.conf
