@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: codesys-config
+  namespace: edge-playground
+data:
+  CODESYSControl_User.cfg: |
+    [ComponentManager]
+    ;Component.1=CmpGateway
+    ;Component.2=CmpGwCommDrvTcp
+    ;Component.3=CmpGwCommDrvShm
+
+    [CmpApp]
+    Bootproject.RetainMismatch.Init=0
+    ;RetainType.Applications=InSRAM
+    Application.1=Application
+    Application.FirstLoadInitRetains=1
+
+    [CmpRedundancyConnectionIP]
+
+    [CmpRedundancy]
+
+    [CmpSrv]
+
+    [IoDrvEtherCAT]

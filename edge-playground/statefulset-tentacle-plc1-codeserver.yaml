@@ -21,10 +21,12 @@ spec:
       containers:
       - image: codercom/code-server:4.5.0
         name: tentacle-plc1-codeserver
+        envFrom:
+        - secretRef:
+            name: tentacle-plc1-codeserver-creds
         volumeMounts:
           - mountPath: /home/coder/project
             name: tentacle-plc1-pv
-        volumeMounts:
           - mountPath: /home/coder/.config
             name: tentacle-plc1-codeserver
       volumes:
@@ -33,7 +35,7 @@ spec:
           claimName: tentacle-plc1-pvc-tentacle-plc1-0
   volumeClaimTemplates:
   - metadata:
-      name: ignition-plc1-codeserver
+      name: tentacle-plc1-codeserver
     spec:
       accessModes:
       - ReadWriteOnce

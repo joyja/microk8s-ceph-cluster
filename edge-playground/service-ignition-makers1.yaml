@@ -18,5 +18,5 @@ spec:
   selector:
     app: ignition-makers1
   sessionAffinity: None
-  type: NodePort
+  type: ClusterIP
 

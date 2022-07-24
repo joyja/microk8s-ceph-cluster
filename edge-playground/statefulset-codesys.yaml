@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: codesys
+  name: codesys
+  namespace: edge-playground
+spec:
+  selector:
+    matchLabels:
+      app: codesys
+  serviceName: codesys
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: codesys
+    spec:
+      containers:
+      - name: codesys
+        image: docker.io/joyja/codesys-control:version-3.5.16
+        volumeMounts:
+        - name: codesys-pvc
+          mountPath: /data
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /etc/CODESYSControl_User.cfg
+          name: codesys-config
+          readOnly: true
+          subPath: CODESYSControl_User.cfg
+        - mountPath: /var/opt/codesys
+          name: codesys-pvc
+      initContainers:
+      - name: codesys-volume-permission-fix
+        image: busybox
+        command: ["/bin/chmod","-R","777", "/var/opt/codesys"]
+        volumeMounts:
+        - mountPath: /var/opt/codesys
+          name: codesys-pvc
+      volumes:
+        - configMap:
+            name: codesys-config
+          name: codesys-config
+  volumeClaimTemplates:
+  - metadata:
+      name: codesys-pvc
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: csi-rbd-sc

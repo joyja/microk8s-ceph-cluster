@@ -1,17 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ignition-makers1
+  name: tentacle-plc1-front
   namespace: edge-playground
 spec:
   rules:
-  - host: ignition-makers1.internal1.jarautomation.io
+  - host: tentacle-plc1.internal1.jarautomation.io
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ignition-makers1
+            name: tentacle-plc1-front
             port: 
-              number: 8088
+              number: 3000

@@ -1,0 +1,10 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: restart-codesys
+  namespace: edge-playground
+rules:
+  - apiGroups: ["apps", "extensions"]
+    resources: ["statefulsets"]
+    resourceNames: ["codesys"]
+    verbs: ["get", "patch", "list", "watch"] # extended list of operations
