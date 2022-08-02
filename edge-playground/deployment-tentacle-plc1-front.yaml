@@ -16,7 +16,7 @@ spec:
         app: tentacle-plc1-front
     spec:
       containers:
-      - image: joyja/tentacle-plc-front:v0.0.12
+      - image: joyja/tentacle-plc-front:v0.0.13-dev
         name: tentacle-plc1-front
         imagePullPolicy: Always
         env:
