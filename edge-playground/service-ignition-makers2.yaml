@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ignition-makers2
+  name: ignition-makers2
+  namespace: edge-playground
+spec:
+  ports:
+  - port: 8088
+    name: http
+    protocol: TCP
+    targetPort: 8088
+  - port: 8043
+    name: https
+    protocol: TCP
+    targetPort: 8043
+  selector:
+    app: ignition-makers2
+  sessionAffinity: None
+  type: ClusterIP
+

@@ -2,43 +2,43 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: ignition-makers1
-  name: ignition-makers1
+    app: pgadmin1
+  name: pgadmin1
   namespace: edge-playground
 spec:
   selector:
     matchLabels:
-      app: ignition-makers1
-  serviceName: ignition-makers1
+      app: pgadmin1
+  serviceName: pgadmin1
   replicas: 1
   template:
     metadata:
       labels:
-        app: ignition-makers1
+        app: pgadmin1
     spec:
       containers:
-      - name: ignition-makers1
+      - name: pgadmin1
         envFrom:
         - secretRef:
-            name: ignition-makers1-creds
-        image: docker.io/kcollins/ignition:8.1.18
+            name: pgadmin1-creds
+        image: docker.io/dpage/pgadmin4:6.12
         volumeMounts:
-        - name: ignition-makers1-pvc
-          mountPath: /data
+        - name: pgadmin1-pvc
+          mountPath: /var/lib/pgadmin
       initContainers:
-      - name: ignition-makers1-volume-permission-fix
+      - name: pgsql-data-permission-fix
         image: busybox
         command: ["/bin/chmod","-R","777", "/data"]
         volumeMounts:
-        - mountPath: /data
-          name: ignition-makers1-pvc
+        - name: pgadmin1-pvc
+          mountPath: /data
   volumeClaimTemplates:
   - metadata:
-      name: ignition-makers1-pvc
+      name: pgadmin1-pvc
     spec:
       accessModes:
       - ReadWriteOnce
       resources:
         requests:
-          storage: 2Gi
+          storage: 1Gi
       storageClassName: csi-rbd-sc

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: postgresql1
+  name: postgresql1
+  namespace: edge-playground
+spec:
+  ports:
+  - port: 5432
+    name: postgresql
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgresql1
+  sessionAffinity: None
+  type: NodePort

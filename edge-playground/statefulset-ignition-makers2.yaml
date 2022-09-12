@@ -2,39 +2,39 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: ignition-makers1
-  name: ignition-makers1
+    app: ignition-makers2
+  name: ignition-makers2
   namespace: edge-playground
 spec:
   selector:
     matchLabels:
-      app: ignition-makers1
-  serviceName: ignition-makers1
+      app: ignition-makers2
+  serviceName: ignition-makers2
   replicas: 1
   template:
     metadata:
       labels:
-        app: ignition-makers1
+        app: ignition-makers2
     spec:
       containers:
-      - name: ignition-makers1
+      - name: ignition-makers2
         envFrom:
         - secretRef:
-            name: ignition-makers1-creds
+            name: ignition-makers2-creds
         image: docker.io/kcollins/ignition:8.1.18
         volumeMounts:
-        - name: ignition-makers1-pvc
+        - name: ignition-makers2-pvc
           mountPath: /data
       initContainers:
-      - name: ignition-makers1-volume-permission-fix
+      - name: ignition-makers2-volume-permission-fix
         image: busybox
         command: ["/bin/chmod","-R","777", "/data"]
         volumeMounts:
         - mountPath: /data
-          name: ignition-makers1-pvc
+          name: ignition-makers2-pvc
   volumeClaimTemplates:
   - metadata:
-      name: ignition-makers1-pvc
+      name: ignition-makers2-pvc
     spec:
       accessModes:
       - ReadWriteOnce

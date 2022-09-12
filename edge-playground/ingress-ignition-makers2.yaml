@@ -1,19 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ignition-makers1
+  name: ignition-makers2
   namespace: edge-playground
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 50m
 spec:
   rules:
-  - host: ignition-makers1.internal1.jarautomation.io
+  - host: ignition-makers2.internal1.jarautomation.io
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: ignition-makers1
+            name: ignition-makers2
             port: 
               number: 8088

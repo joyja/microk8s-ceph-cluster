@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: postgresql1
+  name: postgresql1
+  namespace: edge-playground
+spec:
+  selector:
+    matchLabels:
+      app: postgresql1
+  serviceName: postgresql1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgresql1
+    spec:
+      containers:
+      - name: postgresql1
+        image: docker.io/timescale/timescaledb:2.7.2-pg14
+        imagePullPolicy: Always
+        envFrom:
+        - secretRef:
+            name: postgresql1-creds
+        volumeMounts:
+        - name: postgresql1-pvc
+          mountPath: /var/lib/postgresql
+      initContainers:
+      - name: postgresql1-volume-permission-fix
+        image: busybox
+        command: ["/bin/chmod","-R","777", "/var/lib/postgresql"]
+        volumeMounts:
+        - mountPath: /var/lib/postgresql
+          name: postgresql1-pvc
+  volumeClaimTemplates:
+  - metadata:
+      name: postgresql1-pvc
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+      storageClassName: csi-rbd-sc

@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pgadmin1
+  namespace: edge-playground
+spec:
+  rules:
+  - host: pgadmin1.internal1.jarautomation.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: pgadmin1
+            port:
+              number: 5050
